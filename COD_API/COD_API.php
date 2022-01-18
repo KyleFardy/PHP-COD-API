@@ -5,7 +5,7 @@ class COD_API{
 		$this->SSO_TOKEN = $SSO_TOKEN;
 	}
 	public function MAKE_REQUEST($GAME, $PLATFORM, $GAMERTAG, $WARZONE){
-		$url = "https://my.callofduty.com/api/papi-client/stats/cod/v1/title/{$GAME}/platform/{$PLATFORM}/gamer/{$GAMERTAG}/profile/type/".($WARZONE ? "wz" : "mp");
+		$url = "https://my.callofduty.com/api/papi-client/stats/cod/v1/title/{$GAME}/platform/{$PLATFORM}/gamer/".urlencode($GAMERTAG)."/profile/type/".($WARZONE ? "wz" : "mp");
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_URL, $url);
