@@ -5,11 +5,12 @@ class COD_API{
 		$this->SSO_TOKEN = $SSO_TOKEN;
 	}
 	public function MAKE_REQUEST($GAME, $PLATFORM, $GAMERTAG, $WARZONE){
-		$url = "https://my.callofduty.com/api/papi-client/stats/cod/v1/title/{$GAME}/platform/{$PLATFORM}/gamer/".urlencode($GAMERTAG)."/profile/type/".($WARZONE ? "wz" : "mp");
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ["Cookie: new_SiteId=cod; ACT_SSO_LOCALE=en_US;country=US;ACT_SSO_COOKIE=".$this->SSO_TOKEN.";API_CSRF_TOKEN=68e8b62e-1d9d-4ce1-b93f-cbe5ff31a041;"]);
+		curl_setopt_array($ch, array(
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_URL => "https://my.callofduty.com/api/papi-client/stats/cod/v1/title/{$GAME}/platform/{$PLATFORM}/gamer/".urlencode($GAMERTAG)."/profile/type/".($WARZONE ? "wz" : "mp"),
+                	CURLOPT_HTTPHEADER => ["Cookie: new_SiteId=cod; ACT_SSO_LOCALE=en_US;country=US;ACT_SSO_COOKIE=".$this->SSO_TOKEN.";API_CSRF_TOKEN=68e8b62e-1d9d-4ce1-b93f-cbe5ff31a041;"]
+                ));
 		$response = json_decode(curl_exec($ch));
 		curl_close($ch);
 		if($response->status != "success"){
